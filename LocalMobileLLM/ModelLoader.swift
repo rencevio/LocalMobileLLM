@@ -12,24 +12,36 @@ import MLX
 @Observable
 class ModelLoader {
     enum Model: String, CaseIterable {
-        case smolLM125M
-        case mobileLLM125M
-        case mobileLLM350M
-        case mobileLLM600M
-        case mobileLLM1B
+        case smolLM135Mx4b
+        case smolLM135Mx8b
+        case smolLM135Mxfp16
+        case smolLM360Mx4b
+        case smolLM360Mx8b
+        case smolLM360Mxfp16
+        case smolLM1p7Bx4b
+        case smolLM1p7Bx8b
+        case smolLM1p7Bxfp16
 
         var configuration: ModelConfiguration {
             switch self {
-            case .smolLM125M:
-                    .smolLM_135M_4bit
-            case .mobileLLM125M:
-                    .init(id: "facebook/MobileLLM-125M")
-            case .mobileLLM350M:
-                    .init(id: "facebook/MobileLLM-350M")
-            case .mobileLLM600M:
-                    .init(id: "facebook/MobileLLM-600M")
-            case .mobileLLM1B:
-                    .init(id: "facebook/MobileLLM-1B")
+            case .smolLM135Mx4b:
+                    .init(id: "mlx-community/SmolLM-135M-Instruct-4bit")
+            case .smolLM135Mx8b:
+                    .init(id: "mlx-community/SmolLM-135M-Instruct-8bit")
+            case .smolLM135Mxfp16:
+                    .init(id: "mlx-community/SmolLM-135M-Instruct-fp16")
+            case .smolLM360Mx4b:
+                    .init(id: "mlx-community/SmolLM-360M-Instruct-4bit")
+            case .smolLM360Mx8b:
+                    .init(id: "mlx-community/SmolLM-360M-Instruct-8bit")
+            case .smolLM360Mxfp16:
+                    .init(id: "mlx-community/SmolLM-360M-Instruct-fp16")
+            case .smolLM1p7Bx4b:
+                    .init(id: "mlx-community/SmolLM-1.7B-Instruct-4bit")
+            case .smolLM1p7Bx8b:
+                    .init(id: "mlx-community/SmolLM-1.7B-Instruct-8bit")
+            case .smolLM1p7Bxfp16:
+                    .init(id: "mlx-community/SmolLM-1.7B-Instruct-fp16")
             }
         }
     }

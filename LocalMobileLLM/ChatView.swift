@@ -4,9 +4,15 @@ import MLXLLM
 struct ChatView: View {
     @State private var inputText: String = ""
     @State private var messages: [String] = []
-    @State private var selectedModel: ModelLoader.Model = .smolLM125M
+    @State private var lastOutput: String = ""
+    @State private var selectedModel: ModelLoader.Model = .smolLM135Mx4b
 
     @State private var modelLoader = ModelLoader()
+    @State private var modelInteractor = ModelInteractor()
+
+    private var isInterfaceDisabled: Bool {
+        !isModelReady() || modelInteractor.isGenerating
+    }
 
     var body: some View {
         VStack {
@@ -19,13 +25,16 @@ struct ChatView: View {
             .padding()
             .pickerStyle(MenuPickerStyle())
 
-            // Download Button and Progress Indicator
             if let modelState = modelLoader.modelStates[selectedModel] {
                 switch modelState {
                 case .notLoaded:
                     Button("Download Model") {
                         Task {
-                            try await modelLoader.load(model: selectedModel)
+                            do {
+                                try await modelLoader.load(model: selectedModel)
+                            } catch {
+                                print(error)
+                            }
                         }
                     }
                     .padding()
@@ -37,41 +46,39 @@ struct ChatView: View {
                     .padding()
 
                 case .ready:
-                    Text("Model Loaded")
-                        .padding()
+                    EmptyView()
                 }
             }
 
-            // Chat Display Area
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
-                    ForEach(messages, id: \.self) { message in
-                        Text(message)
-                            .padding()
-                            .background(Color.gray.opacity(0.2))
-                            .cornerRadius(8)
+                    ForEach(messages + [modelInteractor.output], id: \.self) { message in
+                        if !message.isEmpty {
+                            Text(message)
+                                .padding()
+                                .background(Color.gray.opacity(0.2))
+                                .cornerRadius(8)
+                        }
                     }
                 }
                 .padding()
             }
 
-            // Input Field and Send Button
-            HStack {
-                TextField("Type a message...", text: $inputText)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .disabled(!isModelReady())
+            if !isInterfaceDisabled {
+                HStack {
+                    TextField("Type a message...", text: $inputText)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
 
-                Button(action: sendMessage) {
-                    Text("Send")
-                        .padding(.horizontal)
+                    Button(action: sendMessage) {
+                        Text("Send")
+                            .padding(.horizontal)
+                    }
                 }
-                .disabled(!isModelReady())
+                .padding()
             }
-            .padding()
         }
     }
 
-    // Check if the selected model is ready
     func isModelReady() -> Bool {
         if let modelState = modelLoader.modelStates[selectedModel],
            case .ready = modelState {
@@ -80,9 +87,13 @@ struct ChatView: View {
         return false
     }
 
-    // Function to send message
     func sendMessage() {
         guard !inputText.isEmpty else { return }
+
+        if !modelInteractor.output.isEmpty {
+            messages.append(modelInteractor.output)
+        }
+
         messages.append("You: \(inputText)")
 
         guard let modelState = modelLoader.modelStates[selectedModel],
@@ -91,17 +102,31 @@ struct ChatView: View {
             return
         }
 
-        // Generate response using the loaded model
+        let input = inputText
+        inputText = ""
+
         Task {
-            let response = await generateResponse(input: inputText, modelContainer: modelContainer)
-            await MainActor.run {
-                messages.append("\(selectedModel.rawValue): \(response)")
-                inputText = ""
-            }
+            await generateResponse(
+                input: input,
+                container: modelContainer,
+                temperature: 0.6,
+                configuration: selectedModel.configuration
+            )
         }
     }
 
-    func generateResponse(input: String, modelContainer: ModelContainer) async -> String {
-        return "Implement this bro"
+    func generateResponse(
+        input: String,
+        container: ModelContainer,
+        temperature: Float,
+        configuration: ModelConfiguration
+    ) async {
+        await modelInteractor
+            .generate(
+                prompt: input,
+                container: container,
+                parameters: .init(temperature: temperature),
+                configuration: configuration
+            )
     }
 }
