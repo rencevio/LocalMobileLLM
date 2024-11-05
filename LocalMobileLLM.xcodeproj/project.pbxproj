@@ -6,13 +6,32 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		50D2EFC22CDA1D2300D00A2E /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D2EFC12CDA1D2300D00A2E /* Metal.framework */; };
+		50D2EFC52CDA1EB600D00A2E /* LLM in Frameworks */ = {isa = PBXBuildFile; productRef = 50D2EFC42CDA1EB600D00A2E /* LLM */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		50D2EF8F2CDA107C00D00A2E /* LocalMobileLLM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocalMobileLLM.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50D2EFC12CDA1D2300D00A2E /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		50D2EFA52CDA1B6A00D00A2E /* Exceptions for "LocalMobileLLM" folder in "LocalMobileLLM" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 50D2EF8E2CDA107C00D00A2E /* LocalMobileLLM */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		50D2EF912CDA107C00D00A2E /* LocalMobileLLM */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				50D2EFA52CDA1B6A00D00A2E /* Exceptions for "LocalMobileLLM" folder in "LocalMobileLLM" target */,
+			);
 			path = LocalMobileLLM;
 			sourceTree = "<group>";
 		};
@@ -23,6 +42,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50D2EFC52CDA1EB600D00A2E /* LLM in Frameworks */,
+				50D2EFC22CDA1D2300D00A2E /* Metal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -33,6 +54,7 @@
 			isa = PBXGroup;
 			children = (
 				50D2EF912CDA107C00D00A2E /* LocalMobileLLM */,
+				50D2EFBE2CDA1CDF00D00A2E /* Frameworks */,
 				50D2EF902CDA107C00D00A2E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +65,14 @@
 				50D2EF8F2CDA107C00D00A2E /* LocalMobileLLM.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		50D2EFBE2CDA1CDF00D00A2E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				50D2EFC12CDA1D2300D00A2E /* Metal.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -65,6 +95,7 @@
 			);
 			name = LocalMobileLLM;
 			packageProductDependencies = (
+				50D2EFC42CDA1EB600D00A2E /* LLM */,
 			);
 			productName = LocalMobileLLM;
 			productReference = 50D2EF8F2CDA107C00D00A2E /* LocalMobileLLM.app */;
@@ -94,6 +125,9 @@
 			);
 			mainGroup = 50D2EF862CDA107C00D00A2E;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				50D2EFC32CDA1EB600D00A2E /* XCRemoteSwiftPackageReference "mlx-swift-examples" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 50D2EF902CDA107C00D00A2E /* Products */;
 			projectDirPath = "";
@@ -249,12 +283,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LocalMobileLLM/LocalMobileLLM.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LocalMobileLLM/Preview Content\"";
 				DEVELOPMENT_TEAM = WPKYTJELZL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LocalMobileLLM/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -278,12 +314,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LocalMobileLLM/LocalMobileLLM.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LocalMobileLLM/Preview Content\"";
 				DEVELOPMENT_TEAM = WPKYTJELZL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LocalMobileLLM/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -324,6 +362,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		50D2EFC32CDA1EB600D00A2E /* XCRemoteSwiftPackageReference "mlx-swift-examples" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ml-explore/mlx-swift-examples/";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		50D2EFC42CDA1EB600D00A2E /* LLM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 50D2EFC32CDA1EB600D00A2E /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
+			productName = LLM;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 50D2EF872CDA107C00D00A2E /* Project object */;
 }

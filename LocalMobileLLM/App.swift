@@ -8,10 +8,10 @@
 import SwiftUI
 
 @main
-struct LocalMobileLLMApp: App {
+struct MainApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
     }
 }
